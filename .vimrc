@@ -88,6 +88,7 @@ au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap gd <Plug>(go-def)
 au FileType go nmap <leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <leader>gi :GoImports<cr>
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
