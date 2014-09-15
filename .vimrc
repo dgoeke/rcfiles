@@ -1,9 +1,27 @@
-set nocompatible
-
 filetype off
 filetype plugin indent off
 
-execute pathogen#infect()
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/Valloric/YouCompleteMe.git', { 'do': './install.sh' }
+Plug 'https://github.com/kien/ctrlp.vim.git'
+Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'https://github.com/majutsushi/tagbar.git'
+Plug 'https://github.com/SirVer/ultisnips.git'
+Plug 'https://github.com/bling/vim-airline'
+Plug 'git://github.com/tpope/vim-commentary.git'
+Plug 'git://github.com/tpope/vim-fugitive.git'
+Plug 'git://github.com/airblade/vim-gitgutter.git'
+Plug 'https://github.com/fatih/vim-go.git'
+Plug 'https://github.com/tpope/vim-unimpaired.git'
+Plug 'https://github.com/cespare/zenburn.git'
+Plug 'https://github.com/xolox/vim-notes.git'
+Plug 'https://github.com/xolox/vim-misc.git'
+Plug 'https://github.com/mileszs/ack.vim.git'
+Plug 'https://github.com/Raimondi/delimitMate.git'
+Plug 'https://github.com/terryma/vim-multiple-cursors.git'
+Plug 'https://github.com/Lokaltog/vim-easymotion.git'
+Plug 'https://github.com/tpope/vim-surround.git'
+call plug#end()
 
 filetype plugin indent on
 filetype on
@@ -75,13 +93,14 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-let g:notes_directories = [ "/home/dgoeke/Documents/Notes/" ]
+let g:notes_directories = [ "~/.vim-notes/" ]
 let g:notes_suffix = '.txt'
 
 au FileType notes nmap <leader>D :s/DONE //<cr>
 au FileType notes nmap <leader>d ^lliDONE <esc>
 
-inoremap <C-[> <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
 
 " nnoremap <C-down> :m .+1<CR>==
 " nnoremap <C-up> :m .-2<CR>==
@@ -94,4 +113,8 @@ map <up> :wincmd k<CR>
 map <down> :wincmd j<CR>
 map <right> :bnext<CR>
 map <left> :bprevious<CR>
+
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
+inoremap <silent> <C-S>         <C-O>:update<CR>
 
