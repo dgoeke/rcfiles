@@ -1,26 +1,29 @@
+set nocompatible
+
 filetype off
 filetype plugin indent off
 
 call plug#begin('~/.vim/plugged')
-Plug 'https://github.com/Valloric/YouCompleteMe.git', { 'do': './install.sh' }
-Plug 'https://github.com/kien/ctrlp.vim.git'
-Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/majutsushi/tagbar.git'
-Plug 'https://github.com/SirVer/ultisnips.git'
-Plug 'https://github.com/bling/vim-airline'
-Plug 'git://github.com/tpope/vim-commentary.git'
-Plug 'git://github.com/tpope/vim-fugitive.git'
-Plug 'git://github.com/airblade/vim-gitgutter.git'
-Plug 'https://github.com/fatih/vim-go.git'
-Plug 'https://github.com/tpope/vim-unimpaired.git'
-Plug 'https://github.com/cespare/zenburn.git'
-Plug 'https://github.com/xolox/vim-notes.git'
-Plug 'https://github.com/xolox/vim-misc.git'
-Plug 'https://github.com/mileszs/ack.vim.git'
-Plug 'https://github.com/Raimondi/delimitMate.git'
-Plug 'https://github.com/terryma/vim-multiple-cursors.git'
-Plug 'https://github.com/Lokaltog/vim-easymotion.git'
-Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'SirVer/ultisnips'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'fatih/vim-go'
+Plug 'tpope/vim-unimpaired'
+Plug 'cespare/zenburn'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+Plug 'mileszs/ack.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'tpope/vim-surround'
+Plug 'rking/ag.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -54,7 +57,7 @@ set autoindent
 set hidden
 
 " case insensitive search
-set ic
+" set ic
 
 " highlight search
 set hls
@@ -94,7 +97,7 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-let g:notes_directories = [ "~/.vim-notes/" ]
+let g:notes_directories = [ "/home/dgoeke/Documents/Notes/" ]
 let g:notes_suffix = '.txt'
 
 au FileType notes nmap <leader>D :s/DONE //<cr>
@@ -109,7 +112,6 @@ inoremap kj <Esc>
 " inoremap <C-up> <Esc>:m .-2<CR>==gi
 " vnoremap <C-down> :m '>+1<CR>gv=gv
 " vnoremap <C-up> :m '<-2<CR>gv=gv
-
 map <up> :wincmd k<CR>
 map <down> :wincmd j<CR>
 map <right> :bnext<CR>
@@ -118,4 +120,19 @@ map <left> :bprevious<CR>
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+nmap s <Plug>(easymotion-s2)
+let g:EasyMotion_smartcase = 1
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+" fugitive vertical diff split
+set diffopt+=vertical
+
+nmap <leader>q :bd<cr>
+let delimitMate_expand_cr = 1
 

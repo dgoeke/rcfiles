@@ -1,0 +1,25 @@
+{
+	"default_module": "powerline.segments.common",
+	"segments": {
+		"right": [
+			{
+				"function": "branch"
+			},
+			{
+				"function": "weather",
+				"priority": 50,
+				"args": {
+					"update_first": false,
+					"unit": "F",
+					"location_query": "Petaluma, CA"
+				}
+			},
+			{
+				"function": "date",
+				"args": {
+					"format": "%A %I:%M%p"
+				}
+			}
+		]
+	}
+}
