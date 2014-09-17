@@ -66,6 +66,8 @@ set laststatus=2
 set noshowmode
 set noshowcmd
 set noruler
+set nobackup
+set nowritebackup
 
 let g:bufferline_echo = 0
 let g:airline#extensions#tabline#enabled = 1
@@ -133,5 +135,15 @@ map <Leader>k <Plug>(easymotion-k)
 set diffopt+=vertical
 
 nmap <leader>q :bd<cr>
+
+let g:LatexBox_latexmk_async=1
+let g:LatexBox_latexmk_preview_continuously=1
+let g:LatexBox_quickfix=2
+
+au FileType tex let g:delimitMate_autoclose=0
+let g:ultisnipsexpandtrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+
 let delimitMate_expand_cr = 1
 
