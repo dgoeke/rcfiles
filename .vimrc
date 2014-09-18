@@ -98,7 +98,7 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-let g:notes_directories = [ "/home/dgoeke/Documents/Notes/" ]
+let g:notes_directories = [ "~/.vim-notes/" ]
 let g:notes_suffix = '.txt'
 
 au FileType notes nmap <leader>D :s/DONE //<cr>
