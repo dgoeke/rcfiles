@@ -83,11 +83,11 @@ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 au FileType go nmap <leader>I <Plug>(go-info)
-au FileType go nmap <leader>i <Plug>(go-install)
+au FileType go nmap <leader>i :wa<cr><Plug>(go-install)
 au FileType go nmap <leader>gd <Plug>(go-doc)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>b :wa<cr><Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap gd <Plug>(go-def)
@@ -121,6 +121,8 @@ map <left> :bprevious<CR>
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
+
+nnoremap <silent> <C-w> :bd<cr>
 
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
