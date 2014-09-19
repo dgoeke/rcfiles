@@ -68,6 +68,7 @@ set noshowcmd
 set noruler
 set nobackup
 set nowritebackup
+set scrolloff=5
 
 let g:bufferline_echo = 0
 let g:airline#extensions#tabline#enabled = 1
@@ -107,16 +108,10 @@ au FileType notes nmap <leader>d ^lliDONE <esc>
 inoremap jk <Esc>
 inoremap kj <Esc>
 
-" nnoremap <C-down> :m .+1<CR>==
-" nnoremap <C-up> :m .-2<CR>==
-" inoremap <C-down> <Esc>:m .+1<CR>==gi
-" inoremap <C-up> <Esc>:m .-2<CR>==gi
-" vnoremap <C-down> :m '>+1<CR>gv=gv
-" vnoremap <C-up> :m '<-2<CR>gv=gv
-map <up> :wincmd k<CR>
-map <down> :wincmd j<CR>
-map <right> :bnext<CR>
-map <left> :bprevious<CR>
+nmap <up> <nop>
+nmap <down> <nop>
+nmap <left> <nop>
+nmap <right> <nop>
 
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
