@@ -23,6 +23,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
+Plug 'LaTeX-Box-Team/LaTeX-Box'
 call plug#end()
 
 filetype plugin indent on
