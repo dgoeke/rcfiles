@@ -39,6 +39,7 @@ set shiftwidth=4
 set tabstop=4
 set smartindent
 set cursorline
+set mouse=a
 
 " 256 colors
 " set t_Co=256
