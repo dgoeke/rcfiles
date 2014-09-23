@@ -154,10 +154,6 @@ let g:LatexBox_latexmk_preview_continuously=1
 let g:LatexBox_quickfix=2
 
 au FileType tex let g:delimitMate_autoclose=0
-let g:ultisnipsexpandtrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<Tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
-
 let delimitMate_expand_cr = 1
 
 " Unite
@@ -179,4 +175,7 @@ function! s:unite_settings()
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
+
+nnoremap <tab> :bnext<cr>
+nnoremap <s-tab> :bprev<cr>
 
