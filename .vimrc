@@ -75,8 +75,8 @@ set hidden
 
 " highlight search
 set hls
+set incsearch
 set encoding=utf-8
-
 set laststatus=2
 set noshowmode
 set noshowcmd
@@ -102,7 +102,7 @@ au FileType go nmap <leader>I <Plug>(go-info)
 au FileType go nmap <leader>i :wa<cr><Plug>(go-install)
 au FileType go nmap <leader>gd <Plug>(go-doc)
 au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>r :wa<cr><Plug>(go-run)
 au FileType go nmap <leader>b :wa<cr><Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
@@ -133,16 +133,11 @@ noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
 
-nnoremap <silent> <C-w> :bd<cr>
+nnoremap <silent> <leader>w :bd<cr>
+nnoremap <silent> <leader>s :update<cr>
 
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 nmap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
 
 " fugitive vertical diff split
 set diffopt+=vertical
