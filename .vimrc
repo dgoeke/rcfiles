@@ -4,7 +4,6 @@ filetype off
 filetype plugin indent off
 
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'SirVer/ultisnips'
@@ -24,8 +23,20 @@ Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_unix.mak' }
 Plug 'Shougo/neomru.vim'
+
+if has("unix")
+	let s:name=system("uname")
+	if s:name == "Darwin\n"
+		" mac stuff here
+		Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
+	else
+		" unix stuff here
+		Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_unix.mak' }
+	endif
+	Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+endif
+
 call plug#end()
 
 filetype plugin indent on
