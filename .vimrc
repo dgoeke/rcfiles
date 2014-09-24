@@ -47,20 +47,8 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/neomru.vim'
-
-if has("unix")
-	let s:name=system("uname")
-	if s:name == "Darwin\n"
-		" mac stuff here
-		Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_mac.mak' }
-	else
-		" unix stuff here
-		Plug 'Shougo/vimproc.vim', { 'do': 'make -f make_unix.mak' }
-	endif
-	Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-endif
+Plug 'kien/ctrlp.vim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 call plug#end()
 
 filetype plugin indent on
@@ -132,24 +120,4 @@ let g:LatexBox_quickfix=2
 
 au FileType tex let g:delimitMate_autoclose=0
 let delimitMate_expand_cr = 1
-
-" Unite
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap <c-p> :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap <leader>ue :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-endfunction
 
