@@ -1,4 +1,29 @@
 set nocompatible
+set nu
+set relativenumber
+set backspace=indent,eol,start
+set tabstop=4
+set shiftwidth=4
+set tabstop=4
+set smartindent
+set cursorline
+set mouse=a
+set autoread
+set background=dark
+set fillchars+=vert:\ 
+set ttyfast
+set hidden
+set hls
+set incsearch
+set encoding=utf-8
+set laststatus=2
+set noshowmode
+set noshowcmd
+set noruler
+set nobackup
+set nowritebackup
+set scrolloff=5
+set diffopt+=vertical
 
 filetype off
 filetype plugin indent off
@@ -36,54 +61,12 @@ if has("unix")
 	endif
 	Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 endif
-
 call plug#end()
 
 filetype plugin indent on
 filetype on
-
-" line numbering
-set nu
-set relativenumber
-
-set backspace=indent,eol,start
-set tabstop=4
-set shiftwidth=4
-set tabstop=4
-set smartindent
-set cursorline
-set mouse=a
-
-" 256 colors
-" set t_Co=256
-
-" syntax highlighting
 syntax on
-set background=dark
 colorscheme zenburn
-set fillchars+=vert:\ 
-set ttyfast
-
-" automatic indenting
-filetype indent on
-set autoindent
-
-set hidden
-
-" case insensitive search
-" set ic
-
-" highlight search
-set hls
-set incsearch
-set encoding=utf-8
-set laststatus=2
-set noshowmode
-set noshowcmd
-set noruler
-set nobackup
-set nowritebackup
-set scrolloff=5
 
 let g:bufferline_echo = 0
 let g:airline#extensions#tabline#enabled = 1
@@ -129,20 +112,19 @@ nmap <down> <nop>
 nmap <left> <nop>
 nmap <right> <nop>
 
+nnoremap <tab> :bnext<cr>
+nnoremap <s-tab> :bprev<cr>
+
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
 
 nnoremap <silent> <leader>w :bd<cr>
 nnoremap <silent> <leader>s :update<cr>
+nmap <leader>q :bd<cr>
 
 nmap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
-
-" fugitive vertical diff split
-set diffopt+=vertical
-
-nmap <leader>q :bd<cr>
 
 let g:LatexBox_latexmk_async=1
 let g:LatexBox_latexmk_preview_continuously=1
@@ -170,7 +152,4 @@ function! s:unite_settings()
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
-
-nnoremap <tab> :bnext<cr>
-nnoremap <s-tab> :bprev<cr>
 
