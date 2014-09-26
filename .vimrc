@@ -46,7 +46,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
-Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'kien/ctrlp.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 call plug#end()
@@ -114,10 +113,16 @@ nmap <leader>q :bd<cr>
 nmap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
 
-let g:LatexBox_latexmk_async=1
-let g:LatexBox_latexmk_preview_continuously=1
-let g:LatexBox_quickfix=2
-
-au FileType tex let g:delimitMate_autoclose=0
 let delimitMate_expand_cr = 1
+
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
+
+let g:tagbar_autoclose=1
+let g:tagbar_compact=1
 
