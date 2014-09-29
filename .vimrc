@@ -48,6 +48,8 @@ Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 call plug#end()
 
 filetype plugin indent on
@@ -109,6 +111,7 @@ inoremap <silent> <C-S>         <C-O>:update<CR>
 nnoremap <silent> <leader>w :bd<cr>
 nnoremap <silent> <leader>s :update<cr>
 nmap <leader>q :bd<cr>
+nmap <silent> <leader>n [ ] i
 
 nmap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
