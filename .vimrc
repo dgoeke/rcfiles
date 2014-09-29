@@ -24,6 +24,9 @@ set nobackup
 set nowritebackup
 set scrolloff=5
 set diffopt+=vertical
+set foldmethod=syntax
+set foldenable
+set foldlevelstart=10
 
 filetype off
 filetype plugin indent off
@@ -103,6 +106,7 @@ nmap <right> <nop>
 
 nnoremap <tab> :bnext<cr>
 nnoremap <s-tab> :bprev<cr>
+nnoremap <space> za
 
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
