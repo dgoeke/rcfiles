@@ -64,27 +64,30 @@ let g:bufferline_echo = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-autocmd FileType go set commentstring=//\ %s
-
 let mapleader = ";"
 map <leader>T :TagbarToggle<CR>
 map <leader>N :NERDTreeToggle<CR>
 
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-au FileType go nmap <leader>I <Plug>(go-info)
-au FileType go nmap <leader>i :wa<cr><Plug>(go-install)
-au FileType go nmap <leader>gd <Plug>(go-doc)
-au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <leader>r :wa<cr><Plug>(go-run)
-au FileType go nmap <leader>b :wa<cr><Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap gd <Plug>(go-def)
-au FileType go nmap <leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <leader>gi :GoImports<cr>
-au FileType go set autochdir
+augroup configgroup
+	autocmd!
+	au FileType go nmap <leader>I <Plug>(go-info)
+	au FileType go nmap <leader>i :wa<cr><Plug>(go-install)
+	au FileType go nmap <leader>gd <Plug>(go-doc)
+	au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
+	au FileType go nmap <leader>r :wa<cr><Plug>(go-run)
+	au FileType go nmap <leader>b :wa<cr><Plug>(go-build)
+	au FileType go nmap <leader>t <Plug>(go-test)
+	au FileType go nmap <leader>c <Plug>(go-coverage)
+	au FileType go nmap gd <Plug>(go-def)
+	au FileType go nmap <leader>dv <Plug>(go-def-vertical)
+	au FileType go nmap <leader>gi :GoImports<cr>
+	au FileType go set autochdir
+	au FileType go set commentstring=//\ %s
+	au CursorMovedI * if pumvisible() == 0|pclose|endif
+	au InsertLeave * if pumvisible() == 0|pclose|endif
+	au FileType notes nmap <leader>D :s/DONE //<cr>
+	au FileType notes nmap <leader>d ^lliDONE <esc>
+augroup END
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -92,9 +95,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 let g:notes_directories = [ "~/.vim-notes/" ]
 let g:notes_suffix = '.txt'
-
-au FileType notes nmap <leader>D :s/DONE //<cr>
-au FileType notes nmap <leader>d ^lliDONE <esc>
 
 inoremap jk <Esc>
 inoremap kj <Esc>
@@ -122,6 +122,8 @@ let g:EasyMotion_smartcase = 1
 
 let delimitMate_expand_cr = 1
 
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git
       \ --ignore .svn
