@@ -99,25 +99,28 @@ let g:notes_suffix = '.txt'
 inoremap jk <Esc>
 inoremap kj <Esc>
 
-nmap <up> <nop>
-nmap <down> <nop>
-nmap <left> <nop>
-nmap <right> <nop>
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
 
-nnoremap <tab> :bnext<cr>
-nnoremap <s-tab> :bprev<cr>
-nnoremap <space> za
+nnoremap <buffer> <silent> j gj
+nnoremap <buffer> <silent> k gk
 
-noremap <silent> <C-S>          :update<CR>
-vnoremap <silent> <C-S>         <C-C>:update<CR>
-inoremap <silent> <C-S>         <C-O>:update<CR>
+nnoremap <buffer> <silent> <tab> :bnext<cr>
+nnoremap <buffer> <silent> <s-tab> :bprev<cr>
+nnoremap <buffer> <silent> <space> za
 
-nnoremap <silent> <leader>w :bd<cr>
-nnoremap <silent> <leader>s :update<cr>
-nmap <leader>q :bd<cr>
-nmap <silent> <leader>n [ ] i
+noremap <buffer> <silent> <C-S>          :update<CR>
+vnoremap <buffer> <silent> <C-S>         <C-C>:update<CR>
+inoremap <buffer> <silent> <C-S>         <C-O>:update<CR>
 
-nmap s <Plug>(easymotion-s2)
+nnoremap <buffer> <silent> <leader>w :bd<cr>
+nnoremap <buffer> <silent> <leader>s :update<cr>
+nnoremap <buffer> <leader>q :bd<cr>
+nnoremap <buffer> <silent> <leader>n [ ] i
+
+nnoremap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
 
 let delimitMate_expand_cr = 1
