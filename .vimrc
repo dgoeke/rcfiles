@@ -104,21 +104,21 @@ nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
 
-nnoremap <buffer> <silent> j gj
-nnoremap <buffer> <silent> k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
 
-nnoremap <buffer> <silent> <tab> :bnext<cr>
-nnoremap <buffer> <silent> <s-tab> :bprev<cr>
-nnoremap <buffer> <silent> <space> za
+nnoremap <silent> <tab> :bnext<cr>
+nnoremap <silent> <s-tab> :bprev<cr>
+nnoremap <silent> <space> za
 
-noremap <buffer> <silent> <C-S>          :update<CR>
-vnoremap <buffer> <silent> <C-S>         <C-C>:update<CR>
-inoremap <buffer> <silent> <C-S>         <C-O>:update<CR>
+noremap <silent> <C-S>          :update<CR>
+vnoremap <silent> <C-S>         <C-C>:update<CR>
+inoremap <silent> <C-S>         <C-O>:update<CR>
 
-nnoremap <buffer> <silent> <leader>w :bd<cr>
-nnoremap <buffer> <silent> <leader>s :update<cr>
-nnoremap <buffer> <leader>q :bd<cr>
-nnoremap <buffer> <silent> <leader>n [ ] i
+nnoremap <silent> <leader>w :bd<cr>
+nnoremap <silent> <leader>s :update<cr>
+nnoremap <leader>q :bd<cr>
+nnoremap <silent> <leader>n [ ] i
 
 nnoremap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
