@@ -53,6 +53,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'PeterRincker/vim-argumentative'
 call plug#end()
 
 filetype plugin indent on
