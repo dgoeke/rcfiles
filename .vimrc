@@ -55,6 +55,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'mhinz/vim-startify'
+Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -83,12 +84,13 @@ augroup configgroup
 	au FileType go nmap gd <Plug>(go-def)
 	au FileType go nmap <leader>dv <Plug>(go-def-vertical)
 	au FileType go nmap <leader>gi :GoImports<cr>
-	au FileType go set autochdir
+	" au FileType go set autochdir
 	au FileType go set commentstring=//\ %s
 	au CursorMovedI * if pumvisible() == 0|pclose|endif
 	au InsertLeave * if pumvisible() == 0|pclose|endif
 	au FileType notes nmap <leader>D :s/DONE //<cr>
 	au FileType notes nmap <leader>d ^lliDONE <esc>
+	au FileType javascript nmap <leader>b :wa<cr>:!grunt<cr>
 augroup END
 
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -127,8 +129,11 @@ let g:EasyMotion_smartcase = 1
 
 let delimitMate_expand_cr = 1
 
+let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git
       \ --ignore .svn
@@ -136,6 +141,13 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .DS_Store
       \ --ignore "**/*.pyc"
       \ -g ""'
+let g:ctrlp_extensions = ['mixed', 'line', 'undo', 'buffertag', 'tag']
+let g:ctrlp_buftag_types = {
+    \ 'go'          : '--language-force=go --golang-types=ftv'
+\ }
+
+nmap <silent> <C-T> :CtrlPBufTag<cr>
+nmap <silent> <C-L> :CtrlPLine<cr>
 
 let g:tagbar_autoclose=1
 let g:tagbar_compact=1
