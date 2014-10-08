@@ -46,7 +46,6 @@ Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'Raimondi/delimitMate'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'Lokaltog/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
@@ -56,6 +55,7 @@ Plug 'mxw/vim-jsx'
 Plug 'PeterRincker/vim-argumentative'
 Plug 'mhinz/vim-startify'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'sjl/gundo.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -124,8 +124,7 @@ nnoremap <silent> <leader>s :update<cr>
 nnoremap <leader>q :bd<cr>
 nnoremap <silent> <leader>n [ ] i
 
-nnoremap s <Plug>(easymotion-s2)
-let g:EasyMotion_smartcase = 1
+nnoremap <leader>U :GundoToggle<CR>
 
 let delimitMate_expand_cr = 1
 
