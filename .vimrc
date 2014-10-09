@@ -2,9 +2,9 @@ set nocompatible
 set nu
 set relativenumber
 set backspace=indent,eol,start
-set tabstop=4
 set shiftwidth=4
 set tabstop=4
+set expandtab
 set smartindent
 set cursorline
 set mouse=a
@@ -85,7 +85,8 @@ augroup configgroup
 	au FileType go nmap gd <Plug>(go-def)
 	au FileType go nmap <leader>dv <Plug>(go-def-vertical)
 	au FileType go nmap <leader>gi :GoImports<cr>
-	" au FileType go set autochdir
+	au FileType go set noexpandtab
+	au FileType go set autochdir
 	au FileType go set commentstring=//\ %s
 	au CursorMovedI * if pumvisible() == 0|pclose|endif
 	au InsertLeave * if pumvisible() == 0|pclose|endif
