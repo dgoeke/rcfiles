@@ -27,6 +27,7 @@ set diffopt+=vertical
 set foldmethod=syntax
 set foldenable
 set foldlevelstart=10
+set smartcase
 
 filetype off
 filetype plugin indent off
@@ -125,6 +126,11 @@ nnoremap <leader>q :bd<cr>
 nnoremap <silent> <leader>n [ ] i
 
 nnoremap <leader>U :GundoToggle<CR>
+
+nmap <silent> <leader>k :wincmd k<CR>
+nmap <silent> <leader>j :wincmd j<CR>
+nmap <silent> <leader>h :wincmd h<CR>
+nmap <silent> <leader>l :wincmd l<CR>
 
 let delimitMate_expand_cr = 1
 
