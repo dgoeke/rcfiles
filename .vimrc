@@ -127,10 +127,10 @@ nnoremap <silent> <leader>n [ ] i
 
 nnoremap <leader>U :GundoToggle<CR>
 
-nmap <silent> <leader>k :wincmd k<CR>
-nmap <silent> <leader>j :wincmd j<CR>
-nmap <silent> <leader>h :wincmd h<CR>
-nmap <silent> <leader>l :wincmd l<CR>
+nmap <silent> <C-K> :wincmd k<CR>
+nmap <silent> <C-J> :wincmd j<CR>
+nmap <silent> <C-H> :wincmd h<CR>
+nmap <silent> <C-L> :wincmd l<CR>
 
 let delimitMate_expand_cr = 1
 
@@ -152,7 +152,6 @@ let g:ctrlp_buftag_types = {
 \ }
 
 nmap <silent> <C-T> :CtrlPBufTag<cr>
-nmap <silent> <C-L> :CtrlPLine<cr>
 
 let g:tagbar_autoclose=1
 let g:tagbar_compact=1
