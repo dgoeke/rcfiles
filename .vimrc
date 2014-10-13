@@ -1,3 +1,42 @@
+" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker:
+
+" Plugins {
+filetype off
+filetype plugin indent off
+
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'bling/vim-airline'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'fatih/vim-go'
+Plug 'tpope/vim-unimpaired'
+Plug 'cespare/zenburn'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+Plug 'rking/ag.vim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'PeterRincker/vim-argumentative'
+Plug 'mhinz/vim-startify'
+Plug 'sjl/gundo.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/neomru.vim'
+Plug 'tsukkee/unite-tag'
+Plug 'xolox/vim-easytags'
+call plug#end()
+
+filetype plugin indent on
+filetype on
+"}
+
+" Basic Options {
 set nocompatible
 set nu
 set relativenumber
@@ -29,49 +68,19 @@ set foldenable
 set foldlevelstart=10
 set smartcase
 
-filetype off
-filetype plugin indent off
-
-call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
-Plug 'SirVer/ultisnips'
-Plug 'bling/vim-airline'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'fatih/vim-go'
-Plug 'tpope/vim-unimpaired'
-Plug 'cespare/zenburn'
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
-Plug 'Raimondi/delimitMate'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-surround'
-Plug 'rking/ag.vim'
-Plug 'kien/ctrlp.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'PeterRincker/vim-argumentative'
-Plug 'mhinz/vim-startify'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'sjl/gundo.vim'
-call plug#end()
-
-filetype plugin indent on
-filetype on
 syntax on
-colorscheme zenburn
 
+colorscheme zenburn
+let mapleader = ";"
+"}
+
+" Airline options {
 let g:bufferline_echo = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+" }
 
-let mapleader = ";"
-map <leader>T :TagbarToggle<CR>
-map <leader>N :NERDTreeToggle<CR>
-
+" Go settings {
 augroup configgroup
 	autocmd!
 	au FileType go nmap <leader>I <Plug>(go-info)
@@ -86,22 +95,13 @@ augroup configgroup
 	au FileType go nmap <leader>dv <Plug>(go-def-vertical)
 	au FileType go nmap <leader>gi :GoImports<cr>
 	au FileType go set noexpandtab
-	au FileType go set autochdir
 	au FileType go set commentstring=//\ %s
 	au CursorMovedI * if pumvisible() == 0|pclose|endif
 	au InsertLeave * if pumvisible() == 0|pclose|endif
-	au FileType notes nmap <leader>D :s/DONE //<cr>
-	au FileType notes nmap <leader>d ^lliDONE <esc>
-	au FileType javascript nmap <leader>b :wa<cr>:!grunt<cr>
 augroup END
+" }
 
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-let g:notes_directories = [ "~/.vim-notes/" ]
-let g:notes_suffix = '.txt'
-
+" Keybindings {
 inoremap jk <Esc>
 inoremap kj <Esc>
 
@@ -123,8 +123,6 @@ inoremap <silent> <C-S>         <C-O>:update<CR>
 
 nnoremap <silent> <leader>w :bd<cr>
 nnoremap <silent> <leader>s :update<cr>
-nnoremap <leader>q :bd<cr>
-nnoremap <silent> <leader>n [ ] i
 
 nnoremap <leader>U :GundoToggle<CR>
 
@@ -133,27 +131,52 @@ nmap <silent> <C-J> :wincmd j<CR>
 nmap <silent> <C-H> :wincmd h<CR>
 nmap <silent> <C-L> :wincmd l<CR>
 
-let delimitMate_expand_cr = 1
+map <leader>T :TagbarToggle<CR>
+map <leader>N :NERDTreeToggle<CR>
+" }
 
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_follow_symlinks = 1
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
-      \ -g ""'
-let g:ctrlp_extensions = ['mixed', 'line', 'undo', 'buffertag', 'tag']
-let g:ctrlp_buftag_types = {
-    \ 'go'          : '--language-force=go --golang-types=ftv'
-\ }
+" Unite settings {
+let g:unite_source_file_mru_filename_format=":~:."
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+let g:unite_source_grep_recursive_opt = ''
 
-nmap <silent> <C-T> :CtrlPBufTag<cr>
+call unite#custom#profile('files', 'ignore_pattern', join([
+            \ '\.git/',
+            \ '\.sass-cache/',
+            \ '\vendor/',
+            \ '\node_modules/',
+            \ ], '\|'))
+call unite#custom#profile('files', 'filters', ['sorter_rank'])
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+nnoremap <silent> <C-p> :Unite -profile-name=files -buffer-name=unite -unique -smartcase -start-insert buffer file_mru file_rec/async:!<cr>
+nnoremap <silent> <leader>ut :Unite -buffer-name=unite -start-insert tag<cr>
+nnoremap <silent> <leader>uy :Unite -buffer-name=unite history/yank<cr>
+nnoremap <silent> <leader>ul :Unite -buffer-name=unite -start-insert line<cr>
+nnoremap <silent> <leader>ug :Unite -buffer-name=unite grep:.:-i<cr>
+nnoremap <silent> <leader>ub :Unite -buffer-name=unite -quick-match buffer<cr>
+" }
+
+" Misc plugin settings {
+let g:easytags_async=1
+let g:easytags_dynamic_files=2
+set tags=./tags
 
 let g:tagbar_autoclose=1
 let g:tagbar_compact=1
+
+let g:notes_directories = [ "~/.vim-notes/" ]
+let g:notes_suffix = '.txt'
+
+let delimitMate_expand_cr = 1
+" }
 
