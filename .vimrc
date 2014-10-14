@@ -135,9 +135,6 @@ nmap <silent> <C-K> :wincmd k<CR>
 nmap <silent> <C-J> :wincmd j<CR>
 nmap <silent> <C-H> :wincmd h<CR>
 nmap <silent> <C-L> :wincmd l<CR>
-
-map <leader>T :TagbarToggle<CR>
-map <leader>N :NERDTreeToggle<CR>
 " }
 
 " Unite settings {
