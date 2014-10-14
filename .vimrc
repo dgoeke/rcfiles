@@ -148,6 +148,7 @@ let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
 let g:unite_source_grep_recursive_opt = ''
 
 call unite#custom#profile('files', 'ignore_pattern', join([
+            \ '\.rvm/',
             \ '\.git/',
             \ '\.sass-cache/',
             \ '\vendor/',
