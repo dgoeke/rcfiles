@@ -1,12 +1,17 @@
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker:
 
+" Options set before loading plugins {
+let g:easytags_async=1
+let g:easytags_dynamic_files=2
+let g:easytags_include_members=1
+set tags=tags
+"}
+
 " Plugins {
 filetype off
 filetype plugin indent off
 
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -167,10 +172,6 @@ nnoremap <silent> <leader>ub :Unite -buffer-name=unite -quick-match buffer<cr>
 " }
 
 " Misc plugin settings {
-let g:easytags_async=1
-let g:easytags_dynamic_files=2
-set tags=tags
-
 let g:tagbar_autoclose=1
 let g:tagbar_compact=1
 
