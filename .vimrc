@@ -169,7 +169,7 @@ nnoremap <silent> <leader>ub :Unite -buffer-name=unite -quick-match buffer<cr>
 " Misc plugin settings {
 let g:easytags_async=1
 let g:easytags_dynamic_files=2
-set tags=./tags
+set tags=tags
 
 let g:tagbar_autoclose=1
 let g:tagbar_compact=1
