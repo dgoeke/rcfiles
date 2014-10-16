@@ -28,7 +28,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'PeterRincker/vim-argumentative'
-Plug 'mhinz/vim-startify'
 Plug 'sjl/gundo.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
