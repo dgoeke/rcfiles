@@ -34,6 +34,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
 Plug 'tsukkee/unite-tag'
 Plug 'xolox/vim-easytags'
+Plug 'haya14busa/incsearch.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -70,6 +71,7 @@ set diffopt+=vertical
 set foldmethod=syntax
 set foldenable
 set foldlevelstart=10
+set ignorecase
 set smartcase
 
 syntax on
@@ -134,6 +136,25 @@ nmap <silent> <C-K> :wincmd k<CR>
 nmap <silent> <C-J> :wincmd j<CR>
 nmap <silent> <C-H> :wincmd h<CR>
 nmap <silent> <C-L> :wincmd l<CR>
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+let g:incsearch#magic = '\v' " very magic
+
+let g:incsearch#highlight = {
+\   'match' : {
+\     'group' : 'IncSearchUnderline',
+\     'priority' : '10'
+\   },
+\   'on_cursor' : {
+\     'priority' : '100'
+\   },
+\   'cursor' : {
+\     'group' : 'ErrorMsg',
+\     'priority' : '1000'
+\   }
+\ }
 " }
 
 " Unite settings {
@@ -160,12 +181,12 @@ function! s:unite_settings()
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 endfunction
 
-nnoremap <silent> <C-p> :Unite -profile-name=files -buffer-name=unite -unique -smartcase -start-insert buffer file_mru file_rec/async:!<cr>
-nnoremap <silent> <leader>ut :Unite -buffer-name=unite -start-insert tag<cr>
-nnoremap <silent> <leader>uy :Unite -buffer-name=unite history/yank<cr>
-nnoremap <silent> <leader>ul :Unite -buffer-name=unite -start-insert line<cr>
-nnoremap <silent> <leader>ug :Unite -buffer-name=unite grep:.:-i<cr>
-nnoremap <silent> <leader>ub :Unite -buffer-name=unite -quick-match buffer<cr>
+nnoremap <silent> <C-p> :Unite -profile-name=files -buffer-name=unite -unique -smartcase -auto-resize -start-insert buffer file_mru file_rec/async:!<cr>
+nnoremap <silent> <leader>ut :Unite -buffer-name=unite -auto-resize -start-insert tag<cr>
+nnoremap <silent> <leader>uy :Unite -buffer-name=unite -auto-resize history/yank<cr>
+nnoremap <silent> <leader>ul :Unite -buffer-name=unite -auto-resize -start-insert line<cr>
+nnoremap <silent> <leader>ug :Unite -buffer-name=unite -auto-resize grep:.:-i<cr>
+nnoremap <silent> <leader>ub :Unite -buffer-name=unite -auto-resize -quick-match buffer<cr>
 " }
 
 " Misc plugin settings {
