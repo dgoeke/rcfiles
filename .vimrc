@@ -35,6 +35,7 @@ Plug 'Shougo/neomru.vim'
 Plug 'tsukkee/unite-tag'
 Plug 'xolox/vim-easytags'
 Plug 'haya14busa/incsearch.vim'
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 filetype plugin indent on
