@@ -36,6 +36,7 @@ Plug 'tsukkee/unite-tag'
 Plug 'xolox/vim-easytags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mattn/emmet-vim'
+Plug 'takac/vim-hardtime'
 call plug#end()
 
 filetype plugin indent on
@@ -198,5 +199,7 @@ let g:notes_directories = [ "~/.vim-notes/" ]
 let g:notes_suffix = '.txt'
 
 let delimitMate_expand_cr = 1
+
+let g:hardtime_default_on = 1
 " }
 
