@@ -37,6 +37,7 @@ Plug 'xolox/vim-easytags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mattn/emmet-vim'
 Plug 'takac/vim-hardtime'
+Plug 'rhysd/clever-f.vim'
 call plug#end()
 
 filetype plugin indent on
