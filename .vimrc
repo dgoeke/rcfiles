@@ -38,6 +38,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'mattn/emmet-vim'
 Plug 'takac/vim-hardtime'
 Plug 'rhysd/clever-f.vim'
+Plug 'vimwiki/vimwiki'
 call plug#end()
 
 filetype plugin indent on
@@ -202,5 +203,8 @@ let g:notes_suffix = '.txt'
 let delimitMate_expand_cr = 1
 
 let g:hardtime_default_on = 1
+
+let g:vimwiki_list = [{'path': '/home/dgoeke/vimwiki/', 'path_html': '/home/dgoeke/public_html/'}]
+
 " }
 
