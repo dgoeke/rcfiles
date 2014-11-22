@@ -77,6 +77,9 @@ set foldenable
 set foldlevelstart=10
 set ignorecase
 set smartcase
+set splitbelow
+set splitright
+set wildmode=longest,list
 
 syntax on
 
@@ -144,7 +147,6 @@ nmap <silent> <C-L> :wincmd l<CR>
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
-let g:incsearch#magic = '\v' " very magic
 
 let g:incsearch#highlight = {
 \   'match' : {
