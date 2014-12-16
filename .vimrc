@@ -18,7 +18,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-unimpaired'
-Plug 'cespare/zenburn'
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'Raimondi/delimitMate'
@@ -36,9 +35,9 @@ Plug 'tsukkee/unite-tag'
 Plug 'xolox/vim-easytags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mattn/emmet-vim'
-Plug 'takac/vim-hardtime'
 Plug 'rhysd/clever-f.vim'
-Plug 'vimwiki/vimwiki'
+Plug 'flazz/vim-colorschemes'
+Plug 'ujihisa/unite-colorscheme'
 call plug#end()
 
 filetype plugin indent on
@@ -80,11 +79,19 @@ set smartcase
 set splitbelow
 set splitright
 set wildmode=longest,list
+set guioptions-=T
+set guioptions-=m
 
 syntax on
 
 colorscheme zenburn
 let mapleader = ";"
+
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+    endif
+endif
 "}
 
 " Airline options {
