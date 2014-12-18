@@ -38,6 +38,7 @@ Plug 'mattn/emmet-vim'
 Plug 'rhysd/clever-f.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'ujihisa/unite-colorscheme'
+Plug 'tpope/vim-repeat'
 call plug#end()
 
 filetype plugin indent on
@@ -138,6 +139,7 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
+nnoremap Q <nop>
 
 nnoremap <silent> j gj
 nnoremap <silent> k gk
