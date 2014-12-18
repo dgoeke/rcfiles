@@ -82,6 +82,15 @@ set wildmode=longest,list
 set guioptions-=T
 set guioptions-=m
 
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 13
+        set guioptions-=T
+        set guioptions-=m
+        set guioptions+=P
+    end
+end
+
 syntax on
 
 colorscheme zenburn
