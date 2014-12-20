@@ -60,6 +60,9 @@ alt + {minus,equal}
 # wm independent hotkeys
 #
 
+XF86Audio{Raise,Lower}Volume
+    amixer -D pulse sset Master 10%{+,-}
+
 alt + Return
 	gnome-terminal
 
