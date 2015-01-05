@@ -39,6 +39,7 @@ Plug 'rhysd/clever-f.vim'
 Plug 'jnurmine/Zenburn'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
+Plug 'svermeulen/vim-easyclip'
 call plug#end()
 
 filetype plugin indent on
@@ -234,6 +235,10 @@ let g:vimwiki_list = [{'path': '/home/dgoeke/vimwiki/', 'path_html': '/home/dgoe
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 0
 let g:go_highlight_structs = 0
+
+let g:EasyClipAutoFormat = 1
+imap <c-v> <plug>EasyClipInsertModePaste
+let g:EasyClipUseSubstituteDefaults = 1
 
 " }
 
