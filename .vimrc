@@ -36,9 +36,9 @@ Plug 'xolox/vim-easytags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mattn/emmet-vim'
 Plug 'rhysd/clever-f.vim'
-Plug 'flazz/vim-colorschemes'
-Plug 'ujihisa/unite-colorscheme'
+Plug 'jnurmine/Zenburn'
 Plug 'tpope/vim-repeat'
+Plug 'scrooloose/syntastic'
 call plug#end()
 
 filetype plugin indent on
@@ -57,7 +57,6 @@ set smartindent
 set cursorline
 set mouse=a
 set autoread
-set background=dark
 set fillchars+=vert:\ 
 set ttyfast
 set hidden
@@ -82,6 +81,11 @@ set splitright
 set wildmode=longest,list
 set guioptions-=T
 set guioptions-=m
+set guioptions-=L
+set guioptions-=R
+set guioptions-=r
+set guioptions-=l
+set nowrap
 
 if has("gui_running")
     if has("gui_gtk2")
@@ -94,6 +98,7 @@ end
 
 syntax on
 
+set background=dark
 colorscheme zenburn
 let mapleader = ";"
 
@@ -225,6 +230,10 @@ let delimitMate_expand_cr = 1
 let g:hardtime_default_on = 1
 
 let g:vimwiki_list = [{'path': '/home/dgoeke/vimwiki/', 'path_html': '/home/dgoeke/public_html/'}]
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 0
+let g:go_highlight_structs = 0
 
 " }
 
