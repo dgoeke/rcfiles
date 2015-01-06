@@ -87,20 +87,17 @@ set guioptions-=R
 set guioptions-=r
 set guioptions-=l
 set nowrap
+"}
 
-if has("gui_running")
-    if has("gui_gtk2")
-        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 13
-        set guioptions-=T
-        set guioptions-=m
-        set guioptions+=P
-    end
-end
-
+" Color scheme options {
 syntax on
-
 set background=dark
 colorscheme zenburn
+
+hi SignColumn      guibg=#262626
+hi GitGutterAdd    guibg=#262626
+hi GitGutterChange guibg=#262626
+hi GitgutterDelete guibg=#262626
 let mapleader = ";"
 
 if has("gui_running")
