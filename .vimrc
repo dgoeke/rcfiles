@@ -58,7 +58,7 @@ set smartindent
 set cursorline
 set mouse=a
 set autoread
-set fillchars+=vert:\ 
+set fillchars=vert:\│
 set ttyfast
 set hidden
 set hls
