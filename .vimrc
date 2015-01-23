@@ -40,6 +40,9 @@ Plug 'jnurmine/Zenburn'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
 Plug 'svermeulen/vim-easyclip'
+Plug 'xolox/vim-session'
+Plug 'chriskempson/base16-vim'
+Plug 'junegunn/seoul256.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -58,7 +61,7 @@ set smartindent
 set cursorline
 set mouse=a
 set autoread
-set fillchars+=vert:\ 
+set fillchars=vert:\│
 set ttyfast
 set hidden
 set hls
@@ -92,12 +95,15 @@ set nowrap
 " Color scheme options {
 syntax on
 set background=dark
-colorscheme zenburn
+let g:seoul256_background=236
+colorscheme seoul256
+let g:airline_theme='base16'
 
-hi SignColumn      guibg=#262626
-hi GitGutterAdd    guibg=#262626
-hi GitGutterChange guibg=#262626
-hi GitgutterDelete guibg=#262626
+
+" hi SignColumn      guibg=#262626
+" hi GitGutterAdd    guibg=#262626
+" hi GitGutterChange guibg=#262626
+" hi GitgutterDelete guibg=#262626
 let mapleader = ";"
 
 if has("gui_running")
@@ -118,6 +124,7 @@ augroup configgroup
 	autocmd!
 	au FileType go nmap <leader>I <Plug>(go-info)
 	au FileType go nmap <leader>i :wa<cr><Plug>(go-install)
+    au FileType go nmap <leader>v :wa<cr><Plug>(go-vet)
 	au FileType go nmap <leader>gd <Plug>(go-doc)
 	au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
 	au FileType go nmap <leader>r :wa<cr><Plug>(go-run)
@@ -236,6 +243,9 @@ let g:go_highlight_structs = 0
 let g:EasyClipAutoFormat = 1
 imap <c-v> <plug>EasyClipInsertModePaste
 let g:EasyClipUseSubstituteDefaults = 1
+
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes' 
 
 " }
 
