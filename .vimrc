@@ -94,7 +94,7 @@ set nowrap
 syntax on
 set background=dark
 let g:seoul256_background=236
-colorscheme seoul256
+colorscheme zenburn
 let g:airline_theme='zenburn'
 
 
