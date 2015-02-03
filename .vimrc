@@ -15,7 +15,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-unimpaired'
 Plug 'xolox/vim-notes'
@@ -41,8 +41,6 @@ Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
 Plug 'svermeulen/vim-easyclip'
 Plug 'xolox/vim-session'
-Plug 'chriskempson/base16-vim'
-Plug 'junegunn/seoul256.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -97,7 +95,7 @@ syntax on
 set background=dark
 let g:seoul256_background=236
 colorscheme seoul256
-let g:airline_theme='base16'
+let g:airline_theme='zenburn'
 
 
 " hi SignColumn      guibg=#262626
