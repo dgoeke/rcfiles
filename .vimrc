@@ -20,7 +20,7 @@ Plug 'fatih/vim-go'
 Plug 'tpope/vim-unimpaired'
 Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
-Plug 'Raimondi/delimitMate'
+" Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
@@ -41,6 +41,7 @@ Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
 Plug 'svermeulen/vim-easyclip'
 Plug 'xolox/vim-session'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 filetype plugin indent on
@@ -228,7 +229,7 @@ let g:tagbar_compact=1
 let g:notes_directories = [ "~/.vim-notes/" ]
 let g:notes_suffix = '.txt'
 
-let delimitMate_expand_cr = 1
+" let delimitMate_expand_cr = 1
 
 let g:hardtime_default_on = 1
 
