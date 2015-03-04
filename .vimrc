@@ -242,6 +242,7 @@ let g:go_highlight_structs = 0
 let g:EasyClipAutoFormat = 1
 imap <c-v> <plug>EasyClipInsertModePaste
 let g:EasyClipUseSubstituteDefaults = 1
+nnoremap gm m
 
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes' 
