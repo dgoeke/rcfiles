@@ -39,9 +39,9 @@ Plug 'rhysd/clever-f.vim'
 Plug 'jnurmine/Zenburn'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
-Plug 'svermeulen/vim-easyclip'
 Plug 'xolox/vim-session'
 Plug 'jiangmiao/auto-pairs'
+Plug 'justinmk/vim-sneak'
 call plug#end()
 
 filetype plugin indent on
@@ -229,6 +229,9 @@ let g:tagbar_compact=1
 let g:notes_directories = [ "~/.vim-notes/" ]
 let g:notes_suffix = '.txt'
 
+let g:sneak#streak = 1
+let g:sneak#s_next = 1
+
 " let delimitMate_expand_cr = 1
 
 let g:hardtime_default_on = 1
@@ -238,11 +241,6 @@ let g:vimwiki_list = [{'path': '/home/dgoeke/vimwiki/', 'path_html': '/home/dgoe
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 0
 let g:go_highlight_structs = 0
-
-let g:EasyClipAutoFormat = 1
-imap <c-v> <plug>EasyClipInsertModePaste
-let g:EasyClipUseSubstituteDefaults = 1
-nnoremap gm m
 
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes' 
