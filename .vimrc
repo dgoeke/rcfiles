@@ -15,12 +15,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-unimpaired'
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
-" Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
@@ -32,6 +30,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
 Plug 'tsukkee/unite-tag'
+Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 Plug 'haya14busa/incsearch.vim'
 Plug 'mattn/emmet-vim'
@@ -40,8 +39,11 @@ Plug 'jnurmine/Zenburn'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
 Plug 'xolox/vim-session'
-Plug 'jiangmiao/auto-pairs'
 Plug 'justinmk/vim-sneak'
+Plug 'cespare/vim-toml'
+Plug 'ervandew/supertab'
+Plug 'vim-scripts/bufkill.vim'
+Plug '907th/vim-auto-save'
 call plug#end()
 
 filetype plugin indent on
@@ -137,6 +139,8 @@ augroup configgroup
 	au FileType go set commentstring=//\ %s
 	au CursorMovedI * if pumvisible() == 0|pclose|endif
 	au InsertLeave * if pumvisible() == 0|pclose|endif
+    let g:go_fmt_command = "goimports"
+    let g:go_fmt_fail_silently = 1
 augroup END
 " }
 
@@ -161,7 +165,7 @@ noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
 
-nnoremap <silent> <leader>w :bd<cr>
+nnoremap <silent> <leader>w :BD<cr>
 nnoremap <silent> <leader>s :update<cr>
 
 nnoremap <leader>U :GundoToggle<CR>
@@ -232,7 +236,7 @@ let g:notes_suffix = '.txt'
 let g:sneak#streak = 1
 let g:sneak#s_next = 1
 
-" let delimitMate_expand_cr = 1
+let delimitMate_expand_cr = 1
 
 let g:hardtime_default_on = 1
 
@@ -245,5 +249,17 @@ let g:go_highlight_structs = 0
 let g:session_autosave = 'yes'
 let g:session_autoload = 'yes' 
 
+let g:auto_save = 1
+let g:auto_save_in_insert_mode = 0
 " }
 
+" Syntastic  settings {
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" }
