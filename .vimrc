@@ -14,36 +14,24 @@ filetype plugin indent off
 call plug#begin('~/.vim/plugged')
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-unimpaired'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'rking/ag.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'PeterRincker/vim-argumentative'
 Plug 'sjl/gundo.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
-Plug 'tsukkee/unite-tag'
 Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-Plug 'haya14busa/incsearch.vim'
-Plug 'mattn/emmet-vim'
 Plug 'rhysd/clever-f.vim'
 Plug 'jnurmine/Zenburn'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/syntastic'
-Plug 'xolox/vim-session'
-Plug 'justinmk/vim-sneak'
 Plug 'cespare/vim-toml'
 Plug 'ervandew/supertab'
 Plug 'vim-scripts/bufkill.vim'
-Plug '907th/vim-auto-save'
 call plug#end()
 
 filetype plugin indent on
