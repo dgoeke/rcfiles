@@ -15,6 +15,7 @@
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
+  # Broadcom: Assign a static IP, subnet, gateway, etc.  Disable firewall.
   networking = {
     hostName = "dgoeke-linux"; 
     interfaces.enp0s25.ip4 = [ { address = "10.64.64.56"; prefixLength = 24; } ];
@@ -34,29 +35,34 @@
   # Set your time zone.
   time.timeZone = "US/Pacific";
 
-  # List packages installed in system profile. To search by name, run:
+  # Packages installed system-wide
   environment.systemPackages = with pkgs; [
-    wget vim emacs git which aspell htop
-    docker
-    fish ranger
+    wget vim emacs git mercurial which aspell htop
+    silver-searcher tmux docker fish ranger
   ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver = {
+    enable = true;
+    layout = "us";
+    desktopManager.kde5.enable = true;
+    displayManager = {
+      # kdm.enable = true;
+      auto.enable = true;
+      auto.user = "dgoeke";   # auto-login at boot
+    };
+  };
 
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.kdm.enable = true;
-  services.xserver.desktopManager.kde5.enable = true;
+  # Broadcom: Change "users" group to GID 20, rename old "lp" group from 20 to 21
+  ids.gids = {
+    users = 20;
+    lp = 21;
+  };
 
-  ids.gids.users = 20;
-  ids.gids.lp = 21;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Broadcom: Set UID/extraGroups to match output from "id" on a BCM linux machine
   users.extraUsers.dgoeke = {
     description = "David Goeke";
     group = "users";
@@ -67,13 +73,16 @@
     extraGroups = [ "users" "wheel" "networkmanager" "evntsw" "evntswb" "CC0000203444" ];
   };
 
-  # Create groups that match NIS
+  # Broadcom: Create groups that match the ones defined in the user profile, and
+  # set their GIDs to match BRCM's GIDs.
   users.extraGroups = {
     evntsw.gid = 5695;
     evntswb.gid = 5698;
     CC0000203444.gid = 51208;
   };
 
+  # Broadcom: Mount remote project shares.  The settings come from running mount
+  # on a BCM RHEL6 machine and copying them.  IE, for atlas2, "mount|grep atlas2"
   fileSystems = {
     "/net/home/dgoeke" = {
       device = "fs-sj1-29:/vol/vol03003/home02/dgoeke";
@@ -118,8 +127,6 @@
     };
   };
 
-
   # The NixOS release to be compatible with for stateful data such as databases.
   system.stateVersion = "16.03";
-
 }
