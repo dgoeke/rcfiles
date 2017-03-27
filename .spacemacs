@@ -18,28 +18,39 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     auto-completion
-     better-defaults
-     emacs-lisp
-     evil-commentary
-     evil-snipe
-     git
-     markdown
-     ;; org
+     sql
+     html
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t)
+     (syntax-checking :variables
+                      syntax-checking-enable-tooltips nil)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
+
+     ;; tools
+     better-defaults
+     git
      spell-checking
-     syntax-checking
      version-control
-     (clojure :variables clojure-enable-fancify-symbols t)
-     latex
      dash
+     osx
+
+     ;; languages
+     yaml
+     docker
+     javascript
+     emacs-lisp
+     (markdown :variables markdown-live-preview-engine 'vmd)
+     (clojure :variables clojure-enable-fancify-symbols t)
+     evil-commentary
+     (go :variables gofmt-command "goimports")
+     elixir
+     (elm :variables
+          elm-sort-imports-on-save t
+          elm-format-command "elm-format"
+          elm-format-on-save t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -87,11 +98,11 @@ values."
    ;; directory. A string value must be a path to an image format supported
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
-   dotspacemacs-startup-banner 'official
+   dotspacemacs-startup-banner nil
    ;; List of items to show in the startup buffer. If nil it is disabled.
    ;; Possible values are: `recents' `bookmarks' `projects'.
    ;; (default '(recents projects))
-   dotspacemacs-startup-lists '(recents projects)
+   dotspacemacs-startup-lists '(recents bookmarks projects)
    ;; Number of recent files to show in the startup buffer. Ignored if
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
    dotspacemacs-startup-recent-list-size 5
@@ -101,8 +112,8 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-light
-                         spacemacs-light
                          spacemacs-dark
+                         spacemacs-light
                          solarized-dark
                          leuven
                          monokai
@@ -112,7 +123,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 17
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -171,7 +182,7 @@ values."
    dotspacemacs-helm-position 'bottom
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-micro-state nil
+   dotspacemacs-enable-paste-micro-state 'true
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -235,28 +246,53 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
   (spacemacs/toggle-golden-ratio-on)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  )
+  (spacemacs/toggle-truncate-lines-on)
+  (add-to-list 'same-window-buffer-names "*nrepl*")
+  ;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+  (add-to-list 'tramp-remote-path "/var/setuid-wrappers")
+  (add-to-list 'tramp-remote-path "/home/dg/.nix-profile/bin")
+  (add-to-list 'tramp-remote-path "/home/dg/.nix-profile/sbin")
+  (add-to-list 'tramp-remote-path "/nix/var/nix/profiles/default/bin")
+  (add-to-list 'tramp-remote-path "/nix/var/nix/profiles/default/sbin")
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/bin")
+  (add-to-list 'tramp-remote-path "/run/current-system/sw/sbin")
+  (setq user-full-name "David Goeke"
+        user-mail-address "davidg@circleci.com"
+        cider-repl-display-help-banner nil
+        cider-repl-pop-to-buffer-on-connect t
+        vc-follow-symlinks t
+        go-tab-width 4
+        magit-commit-arguments (quote ("--gpg-sign=6B290623"))
+        git-magit-status-fullscreen t
+        tramp-default-method "ssh"
+        clojure-align-forms-automatically t)
+  (setq cider-cljs-lein-repl
+        "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+  (with-eval-after-load 'company
+    (add-to-list 'company-backends 'company-elm)))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (vmd-mode dockerfile-mode docker tablist docker-tramp dash async company-quickhelp web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data flycheck-elm elm-mode sql-indent zenburn-theme yaml-mode xterm-color ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline solarized-theme smeargle shell-pop reveal-in-osx-finder restart-emacs rainbow-delimiters quelpa popwin persp-mode pcre2el pbcopy paradox osx-trash osx-dictionary orgit org-plus-contrib org-bullets open-junk-file ob-elixir neotree mwim multi-term move-text monokai-theme mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md flyspell-correct-helm flycheck-pos-tip flycheck-mix flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump diff-hl dash-at-point company-tern company-statistics company-go column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
