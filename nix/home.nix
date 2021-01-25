@@ -47,6 +47,7 @@
 
   services.xserver = {
     enable = true;
+    videoDrivers = [ "amdgpu" ];
     displayManager.autoLogin = {
       enable = true;
       user = "dg";
@@ -57,10 +58,14 @@
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+  };
 
   users.users.dg = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" ];
+    extraGroups = [ "wheel" "audio" "docker" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -83,6 +88,8 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.pcscd.enable = true;
+
+  virtualisation.docker.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
