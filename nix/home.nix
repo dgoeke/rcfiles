@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -10,61 +6,81 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the gummiboot efi boot loader.
-  boot.loader.gummiboot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
 
-  networking.hostName = "dg-nix"; # Define your hostname.
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      devices = [ "nodev" ];
+      efiSupport = true;
+      enable = true;
 
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
+      useOSProber = true;
+      extraEntries = ''
+        menuentry "Windows 10" {
+          insmod part_gpt
+          insmod fat
+          insmod search_fs_uuid
+          insmod chain
+          search --fs-uuid --set=root 7438E74838E707C6
+          chainloader /Windows/Boot/EFI/bootmgfw.efi
+        }
+      }'';
+    };
   };
 
-  # Set your time zone.
+  networking.hostName = "dg-nix";
+
   time.timeZone = "US/Pacific";
 
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-    wget git vim emacs mercurial which aspell aspellDicts.en
-    htop silver-searcher tmux docker fish ranger
+  networking.useDHCP = false;
+  networking.interfaces.enp6s0.useDHCP = true;
+  networking.interfaces.wlp5s0.useDHCP = true;
 
-    (pkgs.texLiveAggregationFun { paths = [ pkgs.texLive pkgs.texLiveExtra ]; })
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "dg";
+
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+  users.users.dg = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "audio" ];
+  };
+
+  security.sudo.wheelNeedsPassword = false;
+
+  environment.systemPackages = with pkgs; [
+    wget vim curl git htop silver-searcher docker ranger gparted ntfs3g
+    slack firefox zoom-us yubioath-desktop
   ];
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.pcscd.enable = true;
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "caps:swapescape";
-
-  # Enable the nvidia driver  
   nixpkgs.config.allowUnfree = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.auto.enable = true;
-  services.xserver.displayManager.auto.user = "dgoeke";
-  services.xserver.desktopManager.kde5.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.dgoeke = {
-    isNormalUser = true;
-    uid = 1000;
-    description = "David Goeke";
-    home = "/home/dgoeke";
-    extraGroups = [ "wheel" "audio" ];
-    shell = "/run/current-system/sw/bin/fish";
-  };
-
-  # The NixOS release to be compatible with for stateful data such as databases.
-  system.stateVersion = "16.03";
+  system.stateVersion = "20.09"; # Did you read the comment?
 }
+
