@@ -31,6 +31,7 @@
   };
 
   networking.hostName = "dg-nix";
+  networking.networkmanager.enable = true;
 
   time.timeZone = "US/Pacific";
 
@@ -44,11 +45,15 @@
     keyMap = "us";
   };
 
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "dg";
+  services.xserver = {
+    enable = true;
+    displayManager.autoLogin = {
+      enable = true;
+      user = "dg";
+    }; 
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
+  };
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
