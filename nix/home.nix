@@ -10,7 +10,10 @@
   boot.loader.systemd-boot.enable = true;
 
   boot.loader = {
-    efi.canTouchEfiVariables = true;
+    efi = {
+      efiSysMountPoint = "/boot";
+      canTouchEfiVariables = true;
+    };
     grub = {
       devices = [ "nodev" ];
       efiSupport = true;
@@ -20,15 +23,17 @@
       extraEntries = ''
         menuentry "Windows 10" {
           insmod part_gpt
-          insmod fat
+          insmod part_fat
           insmod search_fs_uuid
           insmod chain
-          search --fs-uuid --set=root 7438E74838E707C6
-          chainloader /Windows/Boot/EFI/bootmgfw.efi
+          search --fs-uuid --set=root B3E3-7424 
+          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
         }
       }'';
     };
   };
+
+  # 7438E74838E707C6
 
   networking.hostName = "dg-nix";
   networking.networkmanager.enable = true;
@@ -62,6 +67,7 @@
     enable = true;
     driSupport = true;
   };
+  hardware.opengl.driSupport32Bit = true;
 
   users.users.dg = {
     isNormalUser = true;
@@ -72,7 +78,7 @@
 
   environment.systemPackages = with pkgs; [
     wget vim curl git htop silver-searcher docker ranger gparted ntfs3g
-    slack firefox zoom-us yubioath-desktop
+    slack firefox zoom-us yubioath-desktop steam emacs alacritty
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
