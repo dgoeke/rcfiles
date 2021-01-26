@@ -1,104 +1,85 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
+  home = {
+    username = "dg";
+    homeDirectory = "/home/dg";
+    stateVersion = "21.03";
+    sessionPath = [
+      "/home/dg/.emacs.d/bin/"
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+    packages = [
+      pkgs.alacritty
+      pkgs.awscli
+      pkgs.clojure
+      pkgs.coreutils
+      pkgs.curl
+      pkgs.direnv
+      pkgs.docker pkgs.docker-compose
+      pkgs.fd        # find improvement
+      pkgs.firefox
+      pkgs.gimp pkgs.imagemagick
+      pkgs.gparted
+      pkgs.htop
+      pkgs.jq
+      pkgs.keybase pkgs.keybase-gui
+      pkgs.libreoffice
+      pkgs.pandoc
+      pkgs.ranger
+      pkgs.ripgrep
+      pkgs.rlwrap
+      pkgs.spectacle  # screenshots
+      pkgs.shellcheck
+      pkgs.silver-searcher
+      pkgs.slack
+      pkgs.steam
+      pkgs.terraform
+      pkgs.tmux
+      pkgs.tree
+      pkgs.unzip
+      pkgs.vim
+      pkgs.vlc
+      pkgs.wget
+      pkgs.whois
+      pkgs.yubioath-desktop
+      pkgs.zathura  # document viewer
+      pkgs.zoom-us
+    ];
+  };
 
-  boot.loader = {
-    efi = {
-      efiSysMountPoint = "/boot";
-      canTouchEfiVariables = true;
-    };
-    grub = {
-      devices = [ "nodev" ];
-      efiSupport = true;
+  programs = {
+    command-not-found.enable = true;
+    emacs.enable = true;
+    home-manager.enable = true;
+
+    git = {
       enable = true;
+      userName = "David Goeke";
+      userEmail = "dg@github.dgoeke.io";
+    };
 
-      useOSProber = true;
-      extraEntries = ''
-        menuentry "Windows 10" {
-          insmod part_gpt
-          insmod part_fat
-          insmod search_fs_uuid
-          insmod chain
-          search --fs-uuid --set=root B3E3-7424 
-          chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-        }
-      }'';
+    zsh = {
+      enable = true;
+      prezto = {
+        enable = true;
+        editor.keymap = "vi";
+        ssh.identities = [ "id_ed25519" ];
+        autosuggestions.color = "fg=grey";
+        caseSensitive = false;
+      }; 
+      shellAliases = {
+        hm = "home-manager";
+        gco = "git checkout";
+        dc = "docker-compose";
+        ls = "ls --color --classify";
+      };
     };
   };
 
-  # 7438E74838E707C6
-
-  networking.hostName = "dg-nix";
-  networking.networkmanager.enable = true;
-
-  time.timeZone = "US/Pacific";
-
-  networking.useDHCP = false;
-  networking.interfaces.enp6s0.useDHCP = true;
-  networking.interfaces.wlp5s0.useDHCP = true;
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
-  services.xserver = {
+  services.gpg-agent = {
     enable = true;
-    videoDrivers = [ "amdgpu" ];
-    displayManager.autoLogin = {
-      enable = true;
-      user = "dg";
-    }; 
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
+    defaultCacheTtl = 3600;
+    enableSshSupport = true;
   };
-
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-  };
-  hardware.opengl.driSupport32Bit = true;
-
-  users.users.dg = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "docker" ];
-  };
-
-  security.sudo.wheelNeedsPassword = false;
-
-  environment.systemPackages = with pkgs; [
-    wget vim curl git htop silver-searcher docker ranger gparted ntfs3g
-    slack firefox zoom-us yubioath-desktop steam emacs alacritty
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.pcscd.enable = true;
-
-  virtualisation.docker.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-
-  system.stateVersion = "20.09"; # Did you read the comment?
 }
-
