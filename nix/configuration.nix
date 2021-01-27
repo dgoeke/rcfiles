@@ -45,6 +45,9 @@
     }; 
     displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
+    deviceSection = ''
+      Option "TearFree" "true"
+    '';
   };
 
   sound.enable = true;
@@ -59,7 +62,7 @@
 
   users.users.dg = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "docker" ];
+    extraGroups = [ "wheel" "audio" "docker" "networkmanager" ];
     shell = pkgs.zsh;
   };
 
