@@ -2,4 +2,4 @@ plugged
 *.swp
 tags
 .netrwhist
-
+.envrc
