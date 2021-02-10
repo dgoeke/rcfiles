@@ -18,5 +18,14 @@ let
     extraLibs = with pkgs.python38Packages; [ leglight click ];
   };
 in
-  pkgs.mkShell { buildInputs = [ customPython ]; }
-
+pkgs.stdenv.mkDerivation rec {
+  name = "lights-${version}";
+  version = "0.0.1";
+  buildInputs = [ customPython ];
+  unpackPhase = "true";
+  installPhase = ''
+      mkdir -p $out/bin
+      cp ${./lights.py} $out/bin/lights
+      chmod +x $out/bin/lights
+    '';
+}

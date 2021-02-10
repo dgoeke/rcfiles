@@ -6,17 +6,24 @@
       ./hardware-configuration.nix
     ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi = {
-      efiSysMountPoint = "/boot";
-      canTouchEfiVariables = true;
-    };
-    grub = {
-      devices = [ "nodev" ];
-      efiSupport = true;
-      enable = true;
-      useOSProber = true;
+  boot = {
+    extraModulePackages = [ pkgs.linuxPackages.v4l2loopback ];
+    kernelModules = [ "v4l2loopback" ];
+    extraModprobeConfig = ''
+      options v4l2loopback exclusive_caps=1
+    '';
+    loader = {
+      systemd-boot.enable = true;
+      efi = {
+        efiSysMountPoint = "/boot";
+        canTouchEfiVariables = true;
+      };
+      grub = {
+        devices = [ "nodev" ];
+        efiSupport = true;
+        enable = true;
+        useOSProber = true;
+      };
     };
   };
 
@@ -69,7 +76,7 @@
   security.sudo.wheelNeedsPassword = false;
 
   environment.systemPackages = with pkgs; [
-    ntfs3g
+    ntfs3g bind
   ];
 
   services = {

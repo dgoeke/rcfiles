@@ -1,5 +1,4 @@
-#! /usr/bin/env nix-shell
-#! nix-shell shell.nix -i python
+#! /usr/bin/env python3
 
 import leglight
 import click
