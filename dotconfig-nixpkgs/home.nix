@@ -15,6 +15,7 @@ in
 
     packages = [
       lights
+      pkgs.alot
       pkgs.awscli
       pkgs.babashka
       pkgs.adoptopenjdk-bin
@@ -71,6 +72,7 @@ in
     direnv.enable = true;
     mbsync.enable = true;
     msmtp.enable = true;
+    alot.enable = true;
 
     notmuch = {
       enable = true;
@@ -88,6 +90,10 @@ in
       enable = true;
       userName = "David Goeke";
       userEmail = "dg@github.dgoeke.io";
+      signing = {
+        signByDefault = true;
+        key = "5BD5A0B2955DD7E7";
+      };
       extraConfig = {
         init = {
           defaultBranch = "main";
@@ -103,7 +109,9 @@ in
         editor.keymap = "vi";
         ssh.identities = [ "id_ed25519" ];
         caseSensitive = false;
-        pmodules = [ "environment" "terminal" "editor" "history" "directory" "spectrum" "utility" "completion" "prompt" "autosuggestions" "git" "history-substring-search" "tmux" ];
+        pmodules = [ "environment" "terminal" "editor" "history" "directory"
+                     "spectrum" "utility" "completion" "prompt" "autosuggestions"
+                     "git" "history-substring-search" "tmux" ];
         tmux.autoStartLocal = true;
         tmux.autoStartRemote = true;
         tmux.defaultSessionName = "default";
@@ -175,6 +183,11 @@ in
         create = "maildir";
       };
 
+      gpg = {
+        signByDefault = true;
+        key = "5BD5A0B2955DD7E7";
+      };
+
       msmtp.enable = true;
       notmuch.enable = true;
       primary = true;
@@ -191,6 +204,11 @@ in
       mbsync = {
         enable = true;
         create = "maildir";
+      };
+
+      gpg = {
+        signByDefault = true;
+        key = "5BD5A0B2955DD7E7";
       };
 
       msmtp.enable = true;
