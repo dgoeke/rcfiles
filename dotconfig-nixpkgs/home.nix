@@ -17,13 +17,15 @@ in
       lights
       pkgs.awscli
       pkgs.babashka
-      pkgs.clojure pkgs.clj-kondo
+      pkgs.adoptopenjdk-bin
+      pkgs.clojure pkgs.clj-kondo pkgs.leiningen
       pkgs.coreutils
       pkgs.curl
       pkgs.docker pkgs.docker-compose
       pkgs.fd
       pkgs.gimp pkgs.imagemagick
       pkgs.go pkgs.gopls
+      pkgs.gnupg
       pkgs.gparted
       pkgs.helm
       pkgs.htop
@@ -32,6 +34,7 @@ in
       pkgs.keybase pkgs.keybase-gui
       pkgs.kubectl pkgs.doctl
       pkgs.libreoffice
+      pkgs.pass
       pkgs.pandoc
       pkgs.powerline-fonts
       pkgs.ranger
@@ -46,7 +49,7 @@ in
       pkgs.tmux
       pkgs.tree
       pkgs.unzip
-      pkgs.vim pkgs.neovim
+      pkgs.vim
       pkgs.vlc
       pkgs.wget
       pkgs.whois
@@ -57,11 +60,24 @@ in
     ];
   };
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
   programs = {
     command-not-found.enable = true;
     emacs.enable = true;
     home-manager.enable = true;
     direnv.enable = true;
+    mbsync.enable = true;
+    msmtp.enable = true;
+
+    notmuch = {
+      enable = true;
+      hooks = {
+        preNew = "mbsync --all";
+      };
+    };
 
     fzf = {
       enable = true;
@@ -72,12 +88,17 @@ in
       enable = true;
       userName = "David Goeke";
       userEmail = "dg@github.dgoeke.io";
+      extraConfig = {
+        init = {
+          defaultBranch = "main";
+        };
+      };
     };
 
     zsh = {
       enable = true;
-      envExtra = ". ~/.secrets";
       prezto = {
+        extraConfig = ". ~/.secrets";
         enable = true;
         editor.keymap = "vi";
         ssh.identities = [ "id_ed25519" ];
@@ -86,7 +107,7 @@ in
         tmux.autoStartLocal = true;
         tmux.autoStartRemote = true;
         tmux.defaultSessionName = "default";
-      }; 
+      };
       shellAliases = {
         hm = "home-manager";
         gco = "git checkout";
@@ -122,6 +143,58 @@ in
           "signon.rememberSignons" = false;
         };
       };
+    };
+
+    neovim = {
+      enable = true;
+      plugins = [
+        pkgs.vimPlugins.vim-airline
+        pkgs.vimPlugins.vim-nix
+      ];
+
+      extraConfig = ''
+        set mouse=a
+        set ignorecase
+        set pastetoggle=<F2>
+        set clipboard+=unnamedplus
+      '';
+    };
+  };
+
+  accounts.email = {
+    accounts.dgoeke-io = {
+      realName = "David Goeke";
+      address = "dg@dgoeke.io";
+      imap.host = "imap.fastmail.com";
+      smtp.host = "smtp.fastmail.com";
+      userName = "dg@dgoeke.io";
+      passwordCommand = "${pkgs.pass}/bin/pass fastmail";
+
+      mbsync = {
+        enable = true;
+        create = "maildir";
+      };
+
+      msmtp.enable = true;
+      notmuch.enable = true;
+      primary = true;
+    };
+
+    accounts.gmail = {
+      realName = "David Goeke";
+      address = "dgoeke@gmail.com";
+      imap.host = "imap.gmail.com";
+      smtp.host = "smtp.gmail.com";
+      userName = "dgoeke@gmail.com";
+      passwordCommand = "${pkgs.pass}/bin/pass gmail";
+
+      mbsync = {
+        enable = true;
+        create = "maildir";
+      };
+
+      msmtp.enable = true;
+      notmuch.enable = true;
     };
   };
 
