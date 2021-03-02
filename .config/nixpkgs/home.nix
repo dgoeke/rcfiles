@@ -18,6 +18,7 @@ in
       pkgs.alot
       pkgs.awscli
       pkgs.babashka
+      pkgs.bat   # better cat
       pkgs.adoptopenjdk-bin
       pkgs.clojure pkgs.clj-kondo pkgs.leiningen
       pkgs.coreutils
@@ -58,7 +59,6 @@ in
       pkgs.yubioath-desktop
       pkgs.zathura  # document viewer
       pkgs.zoom-us
-      pkgs.obs-studio
     ];
   };
 
@@ -80,11 +80,7 @@ in
         fenv source ~/.secrets
       '';
       interactiveShellInit = ''
-        if not set -q TMUX
-            set -g TMUX tmux new-session -d -s base
-            eval $TMUX
-            tmux attach-session -d -t base
-        end
+        tmux_autostart
       '';
       shellAliases = {
         ls = "ls --color --classify";
