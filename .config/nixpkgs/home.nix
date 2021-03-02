@@ -76,12 +76,8 @@ in
 
     fish = {
       enable = true;
-      shellInit = ''
-        fenv source ~/.secrets
-      '';
-      interactiveShellInit = ''
-        tmux_autostart
-      '';
+      shellInit = "fenv source ~/.secrets";
+      interactiveShellInit = "tmux_autostart";
       shellAliases = {
         ls = "ls --color --classify";
         vim = "nvim";
@@ -203,6 +199,11 @@ in
       notmuch.enable = true;
       primary = true;
     };
+  };
+
+  services.emacs = {
+    enable = true;
+    client.enable = true;
   };
 
   services.gpg-agent = {
