@@ -92,10 +92,10 @@ in
         {
           name = "fzf";
           src = pkgs.fetchFromGitHub {
-            owner = "jethrokuan";
-            repo = "fzf";
-            rev = "c3defd4a922e97120503b45e26efa775bc672b50";
-            sha256 = "1zfn4ii6vq444h5rghsd7biip1x3zkh9nyvzd1l8ma8ja9y6q77x";
+            owner = "PatrickF1";
+            repo = "fzf.fish";
+            rev = "f14a1d38a6c766184173b5f6c5b6db9750744113";
+            sha256 = "1b280n8bh00n4vkm19zrn84km52296ljlm1zhz95jgaiwymf2x73";
           };
         }
       ];
