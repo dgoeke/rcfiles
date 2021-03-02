@@ -24,6 +24,7 @@ in
       pkgs.curl
       pkgs.docker pkgs.docker-compose
       pkgs.fd
+      pkgs.fishPlugins.foreign-env
       pkgs.gimp pkgs.imagemagick
       pkgs.go pkgs.gopls
       pkgs.gnupg
@@ -69,10 +70,49 @@ in
     command-not-found.enable = true;
     emacs.enable = true;
     home-manager.enable = true;
-    direnv.enable = true;
     mbsync.enable = true;
     msmtp.enable = true;
     alot.enable = true;
+
+    fish = {
+      enable = true;
+      shellInit = ''
+        fenv source ~/.secrets
+      '';
+      interactiveShellInit = ''
+        if not set -q TMUX
+            set -g TMUX tmux new-session -d -s base
+            eval $TMUX
+            tmux attach-session -d -t base
+        end
+      '';
+      shellAliases = {
+        ls = "ls --color --classify";
+        vim = "nvim";
+      };
+      shellAbbrs = {
+        hm = "home-manager";
+        gco = "git checkout";
+        dc = "docker-compose";
+        kc = "kubectl";
+      };
+      plugins = [
+        {
+          name = "fzf";
+          src = pkgs.fetchFromGitHub {
+            owner = "jethrokuan";
+            repo = "fzf";
+            rev = "c3defd4a922e97120503b45e26efa775bc672b50";
+            sha256 = "1zfn4ii6vq444h5rghsd7biip1x3zkh9nyvzd1l8ma8ja9y6q77x";
+          };
+        }
+      ];
+    };
+
+    direnv = {
+      enable = true;
+      enableFishIntegration = true;
+    };
 
     notmuch = {
       enable = true;
@@ -83,7 +123,7 @@ in
 
     fzf = {
       enable = true;
-      enableZshIntegration = true;
+      enableFishIntegration = true;
     };
 
     git = {
@@ -98,31 +138,6 @@ in
         init = {
           defaultBranch = "main";
         };
-      };
-    };
-
-    zsh = {
-      enable = true;
-      prezto = {
-        extraConfig = ". ~/.secrets";
-        enable = true;
-        editor.keymap = "vi";
-        ssh.identities = [ "id_ed25519" ];
-        caseSensitive = false;
-        pmodules = [ "environment" "terminal" "editor" "history" "directory"
-                     "spectrum" "utility" "completion" "prompt" "autosuggestions"
-                     "git" "history-substring-search" "tmux" ];
-        tmux.autoStartLocal = true;
-        tmux.autoStartRemote = true;
-        tmux.defaultSessionName = "default";
-      };
-      shellAliases = {
-        hm = "home-manager";
-        gco = "git checkout";
-        dc = "docker-compose";
-        ls = "ls --color --classify";
-        vim = "nvim";
-        kc = "kubectl";
       };
     };
 
@@ -191,28 +206,6 @@ in
       msmtp.enable = true;
       notmuch.enable = true;
       primary = true;
-    };
-
-    accounts.gmail = {
-      realName = "David Goeke";
-      address = "dgoeke@gmail.com";
-      imap.host = "imap.gmail.com";
-      smtp.host = "smtp.gmail.com";
-      userName = "dgoeke@gmail.com";
-      passwordCommand = "${pkgs.pass}/bin/pass gmail";
-
-      mbsync = {
-        enable = true;
-        create = "maildir";
-      };
-
-      gpg = {
-        signByDefault = true;
-        key = "5BD5A0B2955DD7E7";
-      };
-
-      msmtp.enable = true;
-      notmuch.enable = true;
     };
   };
 

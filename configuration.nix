@@ -70,7 +70,7 @@
   users.users.dg = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "docker" "networkmanager" ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -84,7 +84,7 @@
     pcscd.enable = true;
   };
 
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
 
   virtualisation.docker.enable = true;
 
