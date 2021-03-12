@@ -137,10 +137,16 @@ in
         signByDefault = true;
         key = "5BD5A0B2955DD7E7";
       } else null;
+      ignores = [ "*~" ".DS_Store" ".envrc" ];
       extraConfig = {
-        init = {
-          defaultBranch = "main";
+        core = { editor = "nvim"; };
+        url = {
+          "git@github.com:" = {
+            insteadOf = "https://github.com/";
+          };
         };
+        pull = { rebase = true; };
+        init = { defaultBranch = "main"; };
       };
     };
 
