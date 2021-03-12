@@ -1,8 +1,9 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, ... }:
 let
-  lights = pkgs.callPackage ./pkgs/lights/lights.nix {};
-  unstable = import <nixpkgs-unstable> {};
+  machine   = import ~/.config/nixpkgs/machine.nix;
+  lights    = pkgs.callPackage ./pkgs/lights/lights.nix {};
+  wantGui   = machine.operatingSystem != "Windows";
+  hasGPGSig = machine.hostname == "dg-nix";
 in
 {
   home = {
@@ -13,49 +14,55 @@ in
       "/home/dg/.emacs.d/bin/"
     ];
 
-    packages = [
+    packages =
+    [                            # these packages for all OS's
       lights
+      pkgs.adoptopenjdk-bin
       pkgs.alot
       pkgs.awscli
       pkgs.babashka
-      pkgs.bat   # better cat
-      pkgs.adoptopenjdk-bin
+      pkgs.bat                    # better cat
       pkgs.clojure pkgs.clj-kondo pkgs.leiningen
       pkgs.coreutils
       pkgs.curl
-      pkgs.docker pkgs.docker-compose
       pkgs.fd
       pkgs.fishPlugins.foreign-env
-      pkgs.gimp pkgs.imagemagick
-      pkgs.go pkgs.gopls
       pkgs.gnupg
+      pkgs.go pkgs.gopls
       pkgs.gparted
       pkgs.helm
       pkgs.htop
       pkgs.ispell
       pkgs.jq
-      pkgs.keybase pkgs.keybase-gui
-      pkgs.kubectl pkgs.doctl
-      pkgs.libreoffice
-      pkgs.pass
+      pkgs.keybase 
+      pkgs.kubectl
+      pkgs.doctl
       pkgs.pandoc
-      pkgs.powerline-fonts
+      pkgs.pass
       pkgs.ranger
       pkgs.ripgrep
       pkgs.rlwrap
-      pkgs.spectacle  # screenshots
       pkgs.shellcheck
       pkgs.silver-searcher
-      pkgs.slack
-      pkgs.steam
       pkgs.terraform
       pkgs.tmux
       pkgs.tree
       pkgs.unzip
       pkgs.vim
-      pkgs.vlc
       pkgs.wget
       pkgs.whois
+    ]
+    ++ lib.optional wantGui   # these packages only if the OS wants a gui
+    [
+      pkgs.docker pkgs.docker-compose
+      pkgs.gimp pkgs.imagemagick
+      pkgs.keybase-gui
+      pkgs.libreoffice
+      pkgs.powerline-fonts
+      pkgs.slack
+      pkgs.spectacle  # screenshots
+      pkgs.steam
+      pkgs.vlc
       pkgs.yubioath-desktop
       pkgs.zathura  # document viewer
       pkgs.zoom-us
@@ -69,10 +76,14 @@ in
   programs = {
     command-not-found.enable = true;
     emacs.enable = true;
-    home-manager.enable = true;
     mbsync.enable = true;
     msmtp.enable = true;
     alot.enable = true;
+
+    home-manager = {
+      enable = true;
+      path = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+    };
 
     fish = {
       enable = true;
@@ -122,10 +133,10 @@ in
       enable = true;
       userName = "David Goeke";
       userEmail = "dg@github.dgoeke.io";
-      signing = {
+      signing = if hasGPGSig then {
         signByDefault = true;
         key = "5BD5A0B2955DD7E7";
-      };
+      } else null;
       extraConfig = {
         init = {
           defaultBranch = "main";
@@ -134,7 +145,7 @@ in
     };
 
     alacritty = {
-      enable = true;
+      enable = wantGui;
       settings = {
         font.size = 11;
         font.normal.family = "DejaVu Sans Mono for Powerline";
@@ -143,7 +154,7 @@ in
     };
 
     firefox = {
-      enable = true;
+      enable = wantGui;
       profiles.default = {
         id = 0;
         path = "6qh23uyo.default";
@@ -190,10 +201,10 @@ in
         create = "maildir";
       };
 
-      gpg = {
+      gpg = if hasGPGSig then {
         signByDefault = true;
         key = "5BD5A0B2955DD7E7";
-      };
+      } else null;
 
       msmtp.enable = true;
       notmuch.enable = true;
@@ -202,12 +213,12 @@ in
   };
 
   services.emacs = {
-    enable = true;
+    enable = wantGui;
     client.enable = true;
   };
 
   services.gpg-agent = {
-    enable = true;
+    enable = hasGPGSig;
     defaultCacheTtl = 3600;
     enableSshSupport = true;
   };
