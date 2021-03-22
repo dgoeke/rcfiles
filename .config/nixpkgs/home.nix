@@ -98,6 +98,7 @@ in
         gco = "git checkout";
         dc = "docker-compose";
         kc = "kubectl";
+        tf = "terraform";
       };
       plugins = [
         {
