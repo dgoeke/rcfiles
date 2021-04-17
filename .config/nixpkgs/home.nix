@@ -52,12 +52,11 @@ in
       pkgs.wget
       pkgs.whois
     ]
-    ++ lib.optional wantGui   # these packages only if the OS wants a gui
+    ++ lib.optionals wantGui   # these packages only if the OS wants a gui
     [
       pkgs.docker pkgs.docker-compose
       pkgs.gimp pkgs.imagemagick
       pkgs.keybase-gui
-      pkgs.libreoffice
       pkgs.powerline-fonts
       pkgs.slack
       pkgs.spectacle  # screenshots
