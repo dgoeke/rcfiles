@@ -189,6 +189,7 @@ in
         set ignorecase
         set pastetoggle=<F2>
         set clipboard+=unnamedplus
+        set modeline
       '';
     };
   };

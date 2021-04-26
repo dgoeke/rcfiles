@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+let
+  camlink = pkgs.callPackage /home/dg/.config/nixpkgs/pkgs/camlink.nix {};
+in
 {
   imports =
     [
@@ -7,11 +10,12 @@
     ];
 
   boot = {
-    extraModulePackages = [ pkgs.linuxPackages.v4l2loopback ];
-    kernelModules = [ "v4l2loopback" ];
-    extraModprobeConfig = ''
-      options v4l2loopback exclusive_caps=1
-    '';
+    kernelPackages = pkgs.linuxPackages_5_11;
+    #kernelPatches = [{
+    #    name = "fix-audio";
+    #    patch = /home/dg/fix-audio.patch;
+    #  }];
+
     loader = {
       systemd-boot.enable = true;
       efi = {
@@ -25,6 +29,27 @@
         useOSProber = true;
       };
     };
+  };
+
+  #specialisation.fixed-audio = {
+  #  inheritParentConfig = true;
+  #  configuration = {
+  #    boot.loader.grub.configurationName = "fixed-audio";
+  #    boot.kernelPatches = [
+  #      {
+  #        name = "fixed-audio";
+  #        patch = /home/dg/fix-audio.patch;
+  #      }
+  #    ];
+  #  };
+  #};
+
+  environment.systemPackages = with pkgs; [
+    ntfs3g bind camlink
+  ];
+
+  environment.variables = {
+    LD_PRELOAD = "${camlink}/lib/camlink.so";
   };
 
   networking = {
@@ -43,23 +68,43 @@
     keyMap = "us";
   };
 
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "amdgpu" ];
-    displayManager.autoLogin = {
+  services = {
+    openssh.enable = true;
+    pcscd.enable = true;
+
+    xserver = {
       enable = true;
-      user = "dg";
-    }; 
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
-    deviceSection = ''
-      Option "TearFree" "true"
-    '';
+      videoDrivers = [ "amdgpu" ];
+      displayManager.autoLogin = {
+        enable = true;
+        user = "dg";
+      }; 
+      displayManager.sddm.enable = true;
+      desktopManager.plasma5.enable = true;
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
+    };
   };
 
   sound.enable = true;
+
   hardware = {
-    pulseaudio.enable = true;
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+
+      daemon.config = {
+        default-sample-format = "s24-32le";
+        default-sample-rate = 48000;
+      };
+
+      configFile = pkgs.runCommand "default.pa" {} ''
+        sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
+          ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
+      '';
+    };
+
     opengl = {
       enable = true;
       driSupport = true;
@@ -73,15 +118,9 @@
     shell = pkgs.fish;
   };
 
-  security.sudo.wheelNeedsPassword = false;
-
-  environment.systemPackages = with pkgs; [
-    ntfs3g bind
-  ];
-
-  services = {
-    openssh.enable = true;
-    pcscd.enable = true;
+  security = {
+    sudo.wheelNeedsPassword = false;
+    # rtkit.enable = true;
   };
 
   programs.fish.enable = true;
@@ -94,6 +133,7 @@
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+
   system.stateVersion = "20.09"; # Did you read the comment?
 }
 
