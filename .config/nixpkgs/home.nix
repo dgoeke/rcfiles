@@ -29,12 +29,13 @@ in
       pkgs.fishPlugins.foreign-env
       pkgs.gnupg
       pkgs.go pkgs.gopls
+      pkgs.google-chrome-beta
       pkgs.gparted
       pkgs.helm
       pkgs.htop
       pkgs.ispell
       pkgs.jq
-      pkgs.keybase 
+      pkgs.keybase
       pkgs.kubectl
       pkgs.doctl
       pkgs.pandoc
@@ -133,11 +134,19 @@ in
       enable = true;
       userName = "David Goeke";
       userEmail = "dg@github.dgoeke.io";
+
       signing = if hasGPGSig then {
         signByDefault = true;
         key = "5BD5A0B2955DD7E7";
       } else null;
+
       ignores = [ "*~" ".DS_Store" ".envrc" ];
+      includes = [
+        {
+          condition = "gitdir:~/repos/work/";
+          contents.user.email = "david@whimsical.com";
+        }];
+
       extraConfig = {
         core = { editor = "nvim"; };
         url = {
