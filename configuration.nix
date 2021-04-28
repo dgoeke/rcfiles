@@ -10,11 +10,7 @@ in
     ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_5_11;
-    #kernelPatches = [{
-    #    name = "fix-audio";
-    #    patch = /home/dg/fix-audio.patch;
-    #  }];
+    kernelPackages = pkgs.linuxPackages_latest;
 
     loader = {
       systemd-boot.enable = true;
@@ -31,19 +27,6 @@ in
     };
   };
 
-  #specialisation.fixed-audio = {
-  #  inheritParentConfig = true;
-  #  configuration = {
-  #    boot.loader.grub.configurationName = "fixed-audio";
-  #    boot.kernelPatches = [
-  #      {
-  #        name = "fixed-audio";
-  #        patch = /home/dg/fix-audio.patch;
-  #      }
-  #    ];
-  #  };
-  #};
-
   environment.systemPackages = with pkgs; [
     ntfs3g bind camlink
   ];
@@ -58,6 +41,11 @@ in
     useDHCP = false;
     interfaces.enp6s0.useDHCP = true;
     interfaces.wlp5s0.useDHCP = true;
+
+    extraHosts = ''
+      192.168.86.31 light1
+      192.168.86.32 light2
+    '';
   };
 
   time.timeZone = "US/Pacific";
@@ -95,13 +83,17 @@ in
       support32Bit = true;
 
       daemon.config = {
-        default-sample-format = "s24-32le";
+        default-sample-format = "s24le";
         default-sample-rate = 48000;
       };
 
       configFile = pkgs.runCommand "default.pa" {} ''
         sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
           ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
+      '';
+
+      extraConfig = ''
+        load-module module-remap-source source_name=mono master=alsa_input.usb-Focusrite_Scarlett_2i2_USB_Y869CUE13B6B1F-00.analog-stereo master_channel_map=front-left channel_map=mono
       '';
     };
 
@@ -120,7 +112,6 @@ in
 
   security = {
     sudo.wheelNeedsPassword = false;
-    # rtkit.enable = true;
   };
 
   programs.fish.enable = true;
