@@ -18,7 +18,7 @@ def doAll(f):
         t.join()
 
 @click.group()
-@click.option('--lights', required=True, nargs=2, envvar='LIGHTS')
+@click.option('--lights', nargs=2, envvar='LIGHTS', default=['light1', 'light2'])
 def cli(lights):
     global allLights
     allLights = map(lambda x: leglight.LegLight(x, 9123), lights)
