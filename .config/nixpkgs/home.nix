@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+with lib;
 let
   machine   = import ~/.config/nixpkgs/machine.nix;
   lights    = pkgs.callPackage ./pkgs/lights/lights.nix {};
@@ -14,63 +15,76 @@ in
       "/home/dg/.emacs.d/bin/"
     ];
 
-    packages =
+    packages = with pkgs;
     [                            # these packages for all OS's
       lights
-      pkgs.adoptopenjdk-bin
-      pkgs.alot
-      pkgs.awscli
-      pkgs.babashka
-      pkgs.bat                    # better cat
-      pkgs.clojure pkgs.clj-kondo pkgs.leiningen
-      pkgs.coreutils
-      pkgs.curl
-      pkgs.fd
-      pkgs.fishPlugins.foreign-env
-      pkgs.gnupg
-      pkgs.go pkgs.gopls
-      pkgs.google-chrome-beta
-      pkgs.gparted
-      pkgs.helm
-      pkgs.htop
-      pkgs.ispell
-      pkgs.jq
-      pkgs.keybase
-      pkgs.kubectl
-      pkgs.doctl
-      pkgs.pandoc
-      pkgs.pass
-      pkgs.ranger
-      pkgs.ripgrep
-      pkgs.rlwrap
-      pkgs.shellcheck
-      pkgs.silver-searcher
-      pkgs.terraform
-      pkgs.tmux
-      pkgs.tree
-      pkgs.unzip
-      pkgs.vim
-      pkgs.wget
-      pkgs.whois
+      alot
+      authy
+      babashka
+      bat                    # better cat
+      coreutils
+      curl
+      fd
+      fishPlugins.foreign-env
+      gnupg
+      google-chrome-beta
+      gparted
+      helm
+      htop
+      ispell
+      jq
+      keybase
+      kubectl
+      doctl
+      pass
+      ranger
+      ripgrep
+      rlwrap
+      shellcheck
+      silver-searcher
+      tmux
+      tree
+      unzip
+      vim
+      wget
+      whois
     ]
     ++ lib.optionals wantGui   # these packages only if the OS wants a gui
     [
-      pkgs.docker pkgs.docker-compose
-      pkgs.gimp pkgs.imagemagick
-      pkgs.keybase-gui
-      pkgs.powerline-fonts
-      pkgs.slack
-      pkgs.spectacle  # screenshots
-      pkgs.steam
-      pkgs.vlc
-      pkgs.yubioath-desktop
-      pkgs.zathura  # document viewer
-      pkgs.zoom-us
+      docker docker-compose lazydocker
+      gimp imagemagick
+      insomnia            # api tool like postman
+      keybase-gui
+      obs-studio
+      powerline-fonts
+      slack
+      spectacle  # screenshots
+      spotify
+      steam
+      vlc
+      zathura  # document viewer
+      zoom-us
     ];
+
+    file.firefox-desktop = {
+      target = ".local/share/applications/firefox-work.desktop";
+      text = (generators.toINI { } {
+        "Desktop Entry" = {
+          Name        = "Firefox (Work)";
+          Type        = "Application";
+          Exec        = "${pkgs.firefox}/bin/firefox -P Work %U";
+          GenericName = "Web Browser";
+          Icon        = "firefox";
+          MimeType    = "text/html;text/xml;application/xhtml+xml;application/vnd.mozilla.xul+xml;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp";
+          Terminal    = false;
+        };
+      });
+    };
   };
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    AWS_VAULT_BACKEND = "pass";
   };
 
   programs = {
@@ -140,20 +154,19 @@ in
         key = "5BD5A0B2955DD7E7";
       } else null;
 
-      ignores = [ "*~" ".DS_Store" ".envrc" ];
+      ignores = [ "*~" ".DS_Store" ".envrc" ".lsp" ];
       includes = [
         {
           condition = "gitdir:~/repos/work/";
-          contents.user.email = "david@whimsical.com";
+          contents = {
+            user.email = "david@whimsical.com";
+            commit.gpgsign = true;
+            user.signingkey = "04FB9CC6D7D32B6E";
+          };
         }];
 
       extraConfig = {
         core = { editor = "nvim"; };
-        url = {
-          "git@github.com:" = {
-            insteadOf = "https://github.com/";
-          };
-        };
         pull = { rebase = true; };
         init = { defaultBranch = "main"; };
       };
@@ -238,4 +251,6 @@ in
     defaultCacheTtl = 3600;
     enableSshSupport = true;
   };
+
+  services.lorri.enable = true;
 }

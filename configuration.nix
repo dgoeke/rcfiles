@@ -59,6 +59,7 @@ in
   services = {
     openssh.enable = true;
     pcscd.enable = true;
+
     kbfs = {
       enable = true;
       mountPoint = "%t/kbfs";
@@ -77,6 +78,14 @@ in
       deviceSection = ''
         Option "TearFree" "true"
       '';
+    };
+
+    openvpn.servers = {
+      whimsical = {
+        config = '' config /root/nixos/openvpn/whimsical.ovpn '';
+        autoStart = false;
+        updateResolvConf = true;
+      };
     };
   };
 
@@ -139,9 +148,25 @@ in
     sudo.wheelNeedsPassword = false;
   };
 
-  programs.fish.enable = true;
+  programs = {
+    mosh.enable = true;
+    fish.enable = true;
 
-  virtualisation.docker.enable = true;
+    neovim = {
+      enable = true;
+      vimAlias = true;
+      defaultEditor = true;
+    };
+  };
+
+  virtualisation.docker = {
+    enable = true;
+    autoPrune = {
+      enable = true;
+      dates = "monthly";
+      flags = [ "--all" "--filter" "until=720h" ];  # things created > 1month ago
+    };
+  };
 
   nixpkgs.config.allowUnfree = true;
   nix.gc = {
